@@ -16,7 +16,7 @@ gradle distZip
 cd build/distributions/  
 unzip spark-sample-1.0.0-SNAPSHOT.zip
 cd spark-sample-1.0.0-SNAPSHOT
-cdbin
+cd bin
 ./spark-sample
 ```
 
@@ -27,7 +27,7 @@ gradle distZip
 cd build/distributions/  
 unzip spark-sample-1.0.0-SNAPSHOT.zip
 cd spark-sample-1.0.0-SNAPSHOT
-cdbin
+cd bin
 ./spark-sample
 ```
 
