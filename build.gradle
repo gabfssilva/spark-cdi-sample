@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.sparkjava:spark-core:2.0.0'
+    compile 'org.jboss.weld.se:weld-se-core:2.2.2.Final'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
