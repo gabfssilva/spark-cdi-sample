@@ -24,11 +24,14 @@ public class RoutesStarter {
     @Inject
     private CustomerService service;
 
+    @Inject
+    private JsonTransformer jsonTransformer;
+
     public void main(@Observes ContainerInitialized event) {
         setPort(9090);
 
         //listing all
-        get("/customers", CONTENT_TYPE, (request, response) -> service.findAll(), new JsonTransformer());
+        get("/customers", CONTENT_TYPE, (request, response) -> service.findAll(), jsonTransformer);
 
         //getting a specific customer
         get("/customers/:id", CONTENT_TYPE, (request, response) -> {
@@ -39,7 +42,7 @@ public class RoutesStarter {
             }
 
             return customer;
-        }, new JsonTransformer());
+        }, jsonTransformer);
 
         //adding a customer to the list
         post("/customers/:id", CONTENT_TYPE, (request, response) -> {
@@ -52,7 +55,7 @@ public class RoutesStarter {
             customer.setId(id);
             service.save(customer);
             return customer;
-        }, new JsonTransformer());
+        }, jsonTransformer);
 
         //updating a customer of the list
         put("/customers/:id", CONTENT_TYPE, (request, response) -> {
@@ -66,7 +69,7 @@ public class RoutesStarter {
             customer.setId(parseInt(request.params(":id")));
             service.save(customer);
             return customer;
-        }, new JsonTransformer());
+        }, jsonTransformer);
 
         //deleting a customer from the list
         delete("/customers/:id", CONTENT_TYPE, (request, response) -> {
@@ -76,7 +79,7 @@ public class RoutesStarter {
                 new ResourceNotFoundException();
             }
             return service.remove(customer);
-        }, new JsonTransformer());
+        }, jsonTransformer);
 
         //exception handling
         exception(RestfulException.class, (e, request, response) -> {
