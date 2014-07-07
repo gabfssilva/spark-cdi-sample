@@ -1,8 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin:'application'
 
 sourceCompatibility = 1.8
-version = '1.0'
+version = '1.0.0-SNAPSHOT'
+
+mainClassName = "org.jboss.weld.environment.se.StartMain"
 
 repositories {
     mavenCentral()
