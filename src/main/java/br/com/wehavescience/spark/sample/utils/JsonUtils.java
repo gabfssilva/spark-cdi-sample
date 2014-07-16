@@ -1,6 +1,7 @@
 package br.com.wehavescience.spark.sample.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author Gabriel Francisco  <gabfssilva@gmail.com>
@@ -15,7 +16,7 @@ public class JsonUtils {
     }
 
     public static <T> String asJson(T object){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(object);
     }
 }

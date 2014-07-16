@@ -31,10 +31,10 @@ public class RoutesStarter {
         setPort(9090);
 
         //listing all
-        get("/customers", CONTENT_TYPE, (request, response) -> service.findAll(), jsonTransformer);
+        get("/customers", (request, response) -> service.findAll(), jsonTransformer);
 
         //getting a specific customer
-        get("/customers/:id", CONTENT_TYPE, (request, response) -> {
+        get("/customers/:id", (request, response) -> {
             Customer customer = service.findById(parseInt(request.params(":id")));
 
             if (customer == null) {
@@ -45,7 +45,7 @@ public class RoutesStarter {
         }, jsonTransformer);
 
         //adding a customer to the list
-        post("/customers/:id", CONTENT_TYPE, (request, response) -> {
+        post("/customers/:id", (request, response) -> {
             int id = parseInt(request.params(":id"));
             if (service.findById(id) != null) {
                 throw new ResourceAlreadyExistsException();
@@ -58,7 +58,7 @@ public class RoutesStarter {
         }, jsonTransformer);
 
         //updating a customer of the list
-        put("/customers/:id", CONTENT_TYPE, (request, response) -> {
+        put("/customers/:id", (request, response) -> {
             Customer customer = service.findById(parseInt(request.params(":id")));
 
             if (customer == null) {
@@ -72,14 +72,20 @@ public class RoutesStarter {
         }, jsonTransformer);
 
         //deleting a customer from the list
-        delete("/customers/:id", CONTENT_TYPE, (request, response) -> {
+        delete("/customers/:id", (request, response) -> {
             Customer customer = service.findById(parseInt(request.params(":id")));
 
             if (customer == null) {
                 new ResourceNotFoundException();
             }
+
             return service.remove(customer);
         }, jsonTransformer);
+
+
+        after((request, response) -> {
+            response.type(CONTENT_TYPE);
+        });
 
         //exception handling
         exception(RestfulException.class, (e, request, response) -> {
